@@ -11,6 +11,7 @@ import com.example.carmodels.exception.ResourceNotFoundException;
 import com.example.carmodels.repository.RoleRepository;
 import com.example.carmodels.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,9 +26,10 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.example.carmodels.constants.JWTConst.COOKIE_NAME;
+import static com.example.carmodels.constants.JWTConst.JWT_COOKIE_NAME;
 import static com.example.carmodels.constants.JWTConst.TOKEN_TYPE;
 import static com.example.carmodels.constants.RoleConst.BASIC_USER;
+import static com.example.carmodels.constants.SessionConst.JS_SESSION;
 
 @Service
 public class UserModelService {
@@ -144,7 +146,7 @@ public class UserModelService {
         token = TOKEN_TYPE + token;
 
         // Create a cookie containing the token
-        Cookie cookie = new Cookie(COOKIE_NAME, token);
+        Cookie cookie = new Cookie(JWT_COOKIE_NAME, token);
         cookie.setMaxAge((cookieExpiry));
         cookie.setSecure(false);
         cookie.setHttpOnly(true);
@@ -152,6 +154,5 @@ public class UserModelService {
 
         return cookie;
     }
-
 }
 

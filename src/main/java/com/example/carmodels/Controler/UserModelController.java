@@ -3,6 +3,7 @@ package com.example.carmodels.Controler;
 import com.example.carmodels.Models.DTO.LoginDTO;
 import com.example.carmodels.Models.DTO.RegisterDTO;
 import com.example.carmodels.service.UserModelService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -74,8 +75,6 @@ public class UserModelController {
         // Redirect the user to the home page
         return "redirect:/";
     }
-
-
 }
 
 
