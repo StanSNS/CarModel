@@ -1,17 +1,11 @@
-package com.example.carmodels.CarModelControler;
+package com.example.carmodels.Controler;
 
 import org.springframework.ui.Model;
-import com.example.carmodels.Models.CarModels;
+import com.example.carmodels.Models.Entity.CarModels;
 import com.example.carmodels.service.CarModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Controller
 public class CarModelController {

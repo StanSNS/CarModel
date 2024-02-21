@@ -1,6 +1,6 @@
 package com.example.carmodels.service;
 
-import com.example.carmodels.Models.CarModels;
+import com.example.carmodels.Models.Entity.CarModels;
 import com.example.carmodels.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
