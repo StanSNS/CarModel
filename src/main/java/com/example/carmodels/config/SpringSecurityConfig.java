@@ -40,7 +40,8 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
         http.authorizeHttpRequests((authorize) -> {
             // Define request matchers and permissions
             authorize.requestMatchers(
-                    "/auth/register"
+                    "/auth/register",
+                    "/auth/login"
             ).permitAll();
             authorize.anyRequest().authenticated();
         });

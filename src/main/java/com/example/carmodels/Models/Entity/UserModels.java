@@ -60,4 +60,17 @@ public class UserModels extends BaseModel {
     public void setRole(RoleModels role) {
         this.role = role;
     }
+
+
+//    FIXME DELETE LATER
+    @Override
+    public String toString() {
+        return "UserModels{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", jwtToken='" + jwtToken + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }

@@ -1,8 +1,11 @@
 package com.example.carmodels.service;
 
+import com.example.carmodels.Models.DTO.LoginDTO;
 import com.example.carmodels.Models.DTO.RegisterDTO;
 import com.example.carmodels.Models.Entity.RoleModels;
 import com.example.carmodels.Models.Entity.UserModels;
+import com.example.carmodels.exception.AccessDeniedException;
+import com.example.carmodels.exception.ResourceNotFoundException;
 import com.example.carmodels.repository.RoleRepository;
 import com.example.carmodels.repository.UserRepository;
 import com.example.carmodels.exception.DataValidationException;
@@ -10,6 +13,8 @@ import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 import static com.example.carmodels.constants.RoleConst.BASIC_USER;
 
@@ -24,13 +29,13 @@ public class UserModelService {
     /**
      * Constructor to initialize the UserModelService with necessary dependencies.
      *
-     * @param repository      UserRepository for interacting with user data storage
+     * @param userRepository  UserRepository for interacting with user data storage
      * @param modelMapper     ModelMapper for mapping DTOs to entity models
      * @param passwordEncoder PasswordEncoder for encoding user passwords
      * @param roleRepository  RoleRepository for the user role
      */
-    public UserModelService(UserRepository repository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
-        this.userRepository = repository;
+    public UserModelService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
@@ -69,4 +74,26 @@ public class UserModelService {
         // Throw a DataValidationException to indicate that the registration data is invalid
         throw new DataValidationException();
     }
+
+
+
+
+    public String authenticateUser(@Valid LoginDTO loginDTO) {
+        Optional<UserModels> userModelsOptional = userRepository.findByEmail(loginDTO.getEmail());
+
+        if (!userModelsOptional.isPresent()) {
+            throw new ResourceNotFoundException();
+
+        }
+        UserModels userModels = userModelsOptional.get();
+
+        if (!passwordEncoder.matches(loginDTO.getPassword(), userModels.getPassword())) {
+            throw new AccessDeniedException();
+        }
+
+        System.out.println("Logged in");
+
+        return "";
+    }
 }
+
