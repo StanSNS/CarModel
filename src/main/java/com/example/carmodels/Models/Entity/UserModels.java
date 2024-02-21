@@ -1,9 +1,9 @@
 package com.example.carmodels.Models.Entity;
 
 import com.example.carmodels.Models.Base.BaseModel;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 public class UserModels extends BaseModel {
@@ -15,8 +15,8 @@ public class UserModels extends BaseModel {
     String password;
     @Column
     String jwtToken;
-    @ManyToOne
-    RoleModels role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<RoleModels> roles;
 
     public UserModels() {
     }
@@ -53,24 +53,11 @@ public class UserModels extends BaseModel {
         this.jwtToken = jwtToken;
     }
 
-    public RoleModels getRole() {
-        return role;
+    public Set<RoleModels> getRoles() {
+        return roles;
     }
 
-    public void setRole(RoleModels role) {
-        this.role = role;
-    }
-
-
-//    FIXME DELETE LATER
-    @Override
-    public String toString() {
-        return "UserModels{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", jwtToken='" + jwtToken + '\'' +
-                ", role=" + role +
-                '}';
+    public void setRoles(Set<RoleModels> roles) {
+        this.roles = roles;
     }
 }
