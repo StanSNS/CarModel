@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 public class UserModels extends BaseModel {
     @Column
     String name;
-    @Column
+    @Column(unique = true)
     String email;
     @Column
     String password;

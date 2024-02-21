@@ -10,6 +10,13 @@ public class RoleModels extends BaseModel {
     @Size(min = 4, max = 6)
     private String name;
 
+    public RoleModels() {
+    }
+
+    public RoleModels(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
