@@ -1,12 +1,10 @@
-package com.example.carmodels.Models;
+package com.example.carmodels.Models.Entity;
 
+import com.example.carmodels.Models.Base.BaseModel;
 import jakarta.persistence.*;
 
 @Entity
-public class CarModels {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+public class CarModels extends BaseModel {
     @Column
     String manufacturer;
     @Column
@@ -27,19 +25,11 @@ public class CarModels {
             return null;
         }
 
-        return "/user-photos/" + id + "/" + photos;
+        return "/user-photos/" + this.getId() + "/" + photos;
     }
 
     public CarModels() {
         super();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getManufacturer() {

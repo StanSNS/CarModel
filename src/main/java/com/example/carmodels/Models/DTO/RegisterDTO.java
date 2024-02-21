@@ -1,28 +1,24 @@
-package com.example.carmodels.Models;
+package com.example.carmodels.Models.DTO;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-@Entity
-public class UserModels {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    @Column
+public class RegisterDTO {
+    @NotNull
+    @Size(min = 2)
     String name;
-    @Column
+
+    @Email
+    @NotNull
+    @Size(min = 2)
     String email;
-    @Column
+
+    @NotNull
+    @Size(min = 2)
     String password;
 
-    public UserModels() {}
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public RegisterDTO() {
     }
 
     public String getName() {
@@ -48,5 +44,4 @@ public class UserModels {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }
