@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.example.carmodels.constants.JWTConst.BEGIN_INDEX_TO_RAW_TOKEN;
-import static com.example.carmodels.constants.JWTConst.COOKIE_NAME;
+import static com.example.carmodels.constants.JWTConst.JWT_COOKIE_NAME;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -80,7 +80,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (request.getCookies() != null && request.getCookies().length > 0) {
             // Filter cookies to find the one with the specified name
             List<Cookie> filteredCookies = Arrays.stream(request.getCookies())
-                    .filter(cookie -> cookie.getName().equals(COOKIE_NAME))
+                    .filter(cookie -> cookie.getName().equals(JWT_COOKIE_NAME))
                     .toList();
 
             // Extract token value from the filtered cookies

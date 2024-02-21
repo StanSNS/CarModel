@@ -15,6 +15,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import static com.example.carmodels.constants.JWTConst.JWT_COOKIE_NAME;
+import static com.example.carmodels.constants.SessionConst.JS_SESSION;
+
 @Configuration
 @EnableMethodSecurity
 public class SpringSecurityConfig implements WebMvcConfigurer {
@@ -58,6 +61,12 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
 
         // Configure form-based login. Users are redirected to "/auth/login" to log in.
         http.formLogin(form -> form.loginPage("/auth/login").permitAll());
+
+        http.logout((logout) ->
+                logout.logoutUrl("/auth/logout")
+                        .deleteCookies(JS_SESSION, JWT_COOKIE_NAME)
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true));
 
         // Configure OAuth2 login with default settings.
         http.oauth2Login(Customizer.withDefaults());
