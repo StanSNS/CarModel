@@ -2,6 +2,7 @@ package com.example.carmodels.Security;
 
 import com.example.carmodels.Models.Entity.RoleModels;
 import com.example.carmodels.Models.Entity.UserModels;
+import com.example.carmodels.exception.ResourceNotFoundException;
 import com.example.carmodels.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -35,6 +36,10 @@ public class CustomUserDetails implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // Load user details by email from the repository
         UserModels userModels = userRepository.findByEmail(email).orElse(null);
+
+        if(userModels == null){
+            throw new ResourceNotFoundException();
+        }
 
         // Extract and build user authorities from roles
         Set<GrantedAuthority> authorities = new HashSet<>();

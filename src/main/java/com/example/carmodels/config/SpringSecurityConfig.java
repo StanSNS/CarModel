@@ -56,6 +56,10 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
             authorize.anyRequest().authenticated();
         });
 
+        // Configure form-based login. Users are redirected to "/auth/login" to log in.
+        http.formLogin(form -> form.loginPage("/auth/login").permitAll());
+
+        // Configure OAuth2 login with default settings.
         http.oauth2Login(Customizer.withDefaults());
 
         // Enable basic authentication with default settings
