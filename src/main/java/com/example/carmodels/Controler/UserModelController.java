@@ -2,8 +2,8 @@ package com.example.carmodels.Controler;
 
 import com.example.carmodels.Models.DTO.LoginDTO;
 import com.example.carmodels.Models.DTO.RegisterDTO;
+import com.example.carmodels.Security.AuthUser;
 import com.example.carmodels.service.UserModelService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserModelController {
 
     private final UserModelService service;
+    private final AuthUser authUser;
 
-    public UserModelController(UserModelService service) {
+    public UserModelController(UserModelService service, AuthUser authUser) {
         this.service = service;
+        this.authUser = authUser;
     }
 
 
@@ -31,6 +33,9 @@ public class UserModelController {
      */
     @GetMapping("/register")
     public String showRegister(Model model) {
+        if (authUser.isUserLogged()) {
+            return "redirect:/";
+        }
         model.addAttribute("registerUser", new RegisterDTO());
         return "register";
     }
@@ -43,6 +48,9 @@ public class UserModelController {
      */
     @PostMapping("/register")
     public String registerUser(@Valid RegisterDTO registerDTO) {
+        if (authUser.isUserLogged()) {
+            return "redirect:/";
+        }
         service.addUserModel(registerDTO);
         return "redirect:/auth/login";
     }
@@ -55,6 +63,9 @@ public class UserModelController {
      */
     @GetMapping("/login")
     public String showLogin(Model model) {
+        if (authUser.isUserLogged()) {
+            return "redirect:/";
+        }
         model.addAttribute("loginUser", new LoginDTO());
         return "login";
     }
@@ -70,9 +81,10 @@ public class UserModelController {
      */
     @PostMapping("/login")
     public String loginUser(@Valid LoginDTO loginDTO, HttpServletResponse response) {
-        // Authenticate the user and add authentication cookies to the response
+        if (authUser.isUserLogged()) {
+            return "redirect:/";
+        }
         response.addCookie(service.authenticateUser(loginDTO));
-        // Redirect the user to the home page
         return "redirect:/";
     }
 }
