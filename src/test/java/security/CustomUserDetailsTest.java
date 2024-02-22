@@ -3,7 +3,7 @@ package security;
 import com.example.carmodels.Models.Entity.RoleModels;
 import com.example.carmodels.Models.Entity.UserModels;
 import com.example.carmodels.Security.CustomUserDetails;
-import com.example.carmodels.repository.UserRepository;
+import com.example.carmodels.Repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

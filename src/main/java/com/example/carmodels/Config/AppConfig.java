@@ -1,4 +1,4 @@
-package com.example.carmodels.config;
+package com.example.carmodels.Config;
 
 
 import org.modelmapper.ModelMapper;

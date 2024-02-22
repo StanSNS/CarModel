@@ -2,7 +2,7 @@ package com.example.carmodels.Controler;
 
 import com.example.carmodels.Models.Entity.CarModels;
 import com.example.carmodels.Security.AuthUser;
-import com.example.carmodels.service.CarModelService;
+import com.example.carmodels.Service.CarModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

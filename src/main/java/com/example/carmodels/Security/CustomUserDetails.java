@@ -2,8 +2,8 @@ package com.example.carmodels.Security;
 
 import com.example.carmodels.Models.Entity.RoleModels;
 import com.example.carmodels.Models.Entity.UserModels;
-import com.example.carmodels.exception.ResourceNotFoundException;
-import com.example.carmodels.repository.UserRepository;
+import com.example.carmodels.Exception.ResourceNotFoundException;
+import com.example.carmodels.Repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.example.carmodels.constants.RoleConst.ROLE_PREFIX;
+import static com.example.carmodels.Constants.RoleConst.ROLE_PREFIX;
 
 /**
  * Service responsible for loading user details and creating default user details when necessary.

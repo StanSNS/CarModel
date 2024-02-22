@@ -1,4 +1,4 @@
-package com.example.carmodels.constants;
+package com.example.carmodels.Constants;
 
 public class JWTConst {
     public static final String JWT_COOKIE_NAME = "JWT";

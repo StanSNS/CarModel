@@ -1,4 +1,4 @@
-package com.example.carmodels.constants;
+package com.example.carmodels.Constants;
 
 public class AuthorityConst {
     public static final String REGULAR_USER = "ROLE_USER";

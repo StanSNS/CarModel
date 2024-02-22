@@ -1,4 +1,4 @@
-package com.example.carmodels.constants;
+package com.example.carmodels.Constants;
 
 public class RoleConst {
     public static  final String ROLE_PREFIX = "ROLE_";

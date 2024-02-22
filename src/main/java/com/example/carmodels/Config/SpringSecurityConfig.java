@@ -1,4 +1,4 @@
-package com.example.carmodels.config;
+package com.example.carmodels.Config;
 
 import com.example.carmodels.Security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +17,8 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import static com.example.carmodels.constants.JWTConst.JWT_COOKIE_NAME;
-import static com.example.carmodels.constants.SessionConst.JS_SESSION;
+import static com.example.carmodels.Constants.JWTConst.JWT_COOKIE_NAME;
+import static com.example.carmodels.Constants.SessionConst.JS_SESSION;
 
 @Configuration
 @EnableMethodSecurity

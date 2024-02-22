@@ -3,7 +3,7 @@ package controller;
 import com.example.carmodels.Controler.UserModelController;
 import com.example.carmodels.Models.DTO.LoginDTO;
 import com.example.carmodels.Models.DTO.RegisterDTO;
-import com.example.carmodels.service.UserModelService;
+import com.example.carmodels.Service.UserModelService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;

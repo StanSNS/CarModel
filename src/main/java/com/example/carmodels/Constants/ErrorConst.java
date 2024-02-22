@@ -1,4 +1,4 @@
-package com.example.carmodels.constants;
+package com.example.carmodels.Constants;
 
 public class ErrorConst {
     public static final String VALIDATION_FAILED = "Data validation failed.";

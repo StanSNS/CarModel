@@ -3,7 +3,7 @@ package com.example.carmodels.Controler;
 import com.example.carmodels.Models.DTO.LoginDTO;
 import com.example.carmodels.Models.DTO.RegisterDTO;
 import com.example.carmodels.Security.AuthUser;
-import com.example.carmodels.service.UserModelService;
+import com.example.carmodels.Service.UserModelService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
