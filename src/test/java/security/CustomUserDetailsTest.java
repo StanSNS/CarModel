@@ -1,9 +1,10 @@
 package security;
 
+import com.example.carmodels.Exception.ResourceNotFoundException;
 import com.example.carmodels.Models.Entity.RoleModels;
 import com.example.carmodels.Models.Entity.UserModels;
 import com.example.carmodels.Security.CustomUserDetails;
-import com.example.carmodels.repository.UserRepository;
+import com.example.carmodels.Repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -64,7 +65,7 @@ public class CustomUserDetailsTest {
         when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
 
         // Act and Assert
-        assertThrows(NullPointerException.class, () -> customUserDetails.loadUserByUsername(email));
+        assertThrows(ResourceNotFoundException.class, () -> customUserDetails.loadUserByUsername(email));
     }
 
     @Test

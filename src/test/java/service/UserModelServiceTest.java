@@ -1,18 +1,18 @@
 package service;
 
-import static com.example.carmodels.constants.JWTConst.TOKEN_TYPE;
-import static com.example.carmodels.constants.RoleConst.BASIC_USER;
+import static com.example.carmodels.Constants.JWTConst.TOKEN_TYPE;
+import static com.example.carmodels.Constants.RoleConst.BASIC_USER;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.example.carmodels.Models.DTO.LoginDTO;
 import com.example.carmodels.Models.Entity.RoleModels;
 import com.example.carmodels.Security.JwtTokenProvider;
-import com.example.carmodels.exception.AccessDeniedException;
-import com.example.carmodels.exception.ResourceNotFoundException;
-import com.example.carmodels.repository.RoleRepository;
-import com.example.carmodels.service.UserModelService;
-import com.example.carmodels.exception.DataValidationException;
+import com.example.carmodels.Exception.AccessDeniedException;
+import com.example.carmodels.Exception.ResourceNotFoundException;
+import com.example.carmodels.Repository.RoleRepository;
+import com.example.carmodels.Service.UserModelService;
+import com.example.carmodels.Exception.DataValidationException;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.carmodels.Models.DTO.RegisterDTO;
 import com.example.carmodels.Models.Entity.UserModels;
-import com.example.carmodels.repository.UserRepository;
+import com.example.carmodels.Repository.UserRepository;
 
 import java.util.Optional;
 

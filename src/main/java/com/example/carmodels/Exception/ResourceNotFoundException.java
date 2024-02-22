@@ -1,11 +1,11 @@
-package com.example.carmodels.exception;
+package com.example.carmodels.Exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import static com.example.carmodels.constants.ErrorConst.RESOURCE_NOT_FOUND;
+import static com.example.carmodels.Constants.ErrorConst.RESOURCE_NOT_FOUND;
 
 /**
  * Custom exception class representing resource not found situations.

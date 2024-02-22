@@ -3,7 +3,7 @@ package com.example.carmodels.Controler;
 import com.example.carmodels.Models.DTO.LoginDTO;
 import com.example.carmodels.Models.DTO.RegisterDTO;
 import com.example.carmodels.Security.AuthUser;
-import com.example.carmodels.service.UserModelService;
+import com.example.carmodels.Service.UserModelService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -19,17 +19,22 @@ public class UserModelController {
     private final UserModelService service;
     private final AuthUser authUser;
 
+    /**
+     * Constructor injecting required services.
+     *
+     * @param service  The user model service.
+     * @param authUser The authentication user service.
+     */
     public UserModelController(UserModelService service, AuthUser authUser) {
         this.service = service;
         this.authUser = authUser;
     }
 
-
     /**
-     * Displays the user registration form.
+     * Displays the registration form if the user is not logged in.
      *
-     * @param model Model object to add attributes for the view
-     * @return String representing the view name for registration form
+     * @param model The model to be populated with data.
+     * @return The view for user registration.
      */
     @GetMapping("/register")
     public String showRegister(Model model) {
@@ -41,10 +46,10 @@ public class UserModelController {
     }
 
     /**
-     * Handles the submission of the user registration form.
+     * Handles user registration.
      *
-     * @param registerDTO RegisterDTO object containing user registration data
-     * @return String representing the redirection to the home page
+     * @param registerDTO The registration data transfer object.
+     * @return Redirects to the login page after successful registration.
      */
     @PostMapping("/register")
     public String registerUser(@Valid RegisterDTO registerDTO) {
@@ -56,10 +61,10 @@ public class UserModelController {
     }
 
     /**
-     * Displays the user login form.
+     * Displays the login form if the user is not logged in.
      *
-     * @param model Model object to add attributes for the view
-     * @return String representing the view name for login form
+     * @param model The model to be populated with data.
+     * @return The view for user login.
      */
     @GetMapping("/login")
     public String showLogin(Model model) {
@@ -71,13 +76,11 @@ public class UserModelController {
     }
 
     /**
-     * Controller method for handling user login.
-     * Attempts to authenticate the user using the provided login credentials.
-     * If authentication is successful, a redirect to the home page is performed.
+     * Handles user login.
      *
-     * @param loginDTO The data transfer object containing the user's login credentials.
+     * @param loginDTO The login data transfer object.
      * @param response The HTTP response object to add cookies for user authentication.
-     * @return A redirect to the home page upon successful authentication.
+     * @return Redirects to the home page after successful login.
      */
     @PostMapping("/login")
     public String loginUser(@Valid LoginDTO loginDTO, HttpServletResponse response) {

@@ -19,8 +19,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.example.carmodels.constants.JWTConst.BEGIN_INDEX_TO_RAW_TOKEN;
-import static com.example.carmodels.constants.JWTConst.JWT_COOKIE_NAME;
+import static com.example.carmodels.Constants.JWTConst.BEGIN_INDEX_TO_RAW_TOKEN;
+import static com.example.carmodels.Constants.JWTConst.JWT_COOKIE_NAME;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {

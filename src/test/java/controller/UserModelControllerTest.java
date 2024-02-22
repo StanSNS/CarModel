@@ -3,7 +3,8 @@ package controller;
 import com.example.carmodels.Controler.UserModelController;
 import com.example.carmodels.Models.DTO.LoginDTO;
 import com.example.carmodels.Models.DTO.RegisterDTO;
-import com.example.carmodels.service.UserModelService;
+import com.example.carmodels.Security.AuthUser;
+import com.example.carmodels.Service.UserModelService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,53 +20,128 @@ import static org.mockito.Mockito.*;
 public class UserModelControllerTest {
 
     @Mock
-    private UserModelService service;
+    UserModelService service;
 
     @Mock
-    private Model model;
+    AuthUser authUser;
 
     @Mock
-    private HttpServletResponse response;
+    Model model;
+
+    @Mock
+    HttpServletResponse response;
 
     @InjectMocks
-    private UserModelController controller;
+    UserModelController controller;
 
     @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void testShowRegister() {
-        String viewName = controller.showRegister(model);
-        assertEquals("register", viewName);
+    void showRegister_NotLoggedIn_ReturnsRegisterView() {
+        // Given
+        when(authUser.isUserLogged()).thenReturn(false);
+
+        // When
+        String view = controller.showRegister(model);
+
+        // Then
+        assertEquals("register", view);
         verify(model).addAttribute(eq("registerUser"), any(RegisterDTO.class));
     }
 
     @Test
-    public void testRegisterUser() {
+    void showRegister_LoggedIn_ReturnsRedirect() {
+        // Given
+        when(authUser.isUserLogged()).thenReturn(true);
+
+        // When
+        String view = controller.showRegister(model);
+
+        // Then
+        assertEquals("redirect:/", view);
+        verifyNoInteractions(model);
+    }
+
+    @Test
+    void registerUser_NotLoggedIn_AddsUserAndRedirectsToLogin() {
+        // Given
         RegisterDTO registerDTO = new RegisterDTO();
-        String redirect = controller.registerUser(registerDTO);
-        assertEquals("redirect:/auth/login", redirect);
+
+        // When
+        String view = controller.registerUser(registerDTO);
+
+        // Then
+        assertEquals("redirect:/auth/login", view);
         verify(service).addUserModel(registerDTO);
     }
 
     @Test
-    public void testShowLogin() {
-        String viewName = controller.showLogin(model);
-        assertEquals("login", viewName);
+    void registerUser_LoggedIn_ReturnsRedirect() {
+        // Given
+        when(authUser.isUserLogged()).thenReturn(true);
+
+        // When
+        String view = controller.registerUser(new RegisterDTO());
+
+        // Then
+        assertEquals("redirect:/", view);
+        verifyNoInteractions(service);
+    }
+
+    @Test
+    void showLogin_NotLoggedIn_ReturnsLoginView() {
+        // Given
+        when(authUser.isUserLogged()).thenReturn(false);
+
+        // When
+        String view = controller.showLogin(model);
+
+        // Then
+        assertEquals("login", view);
         verify(model).addAttribute(eq("loginUser"), any(LoginDTO.class));
     }
 
     @Test
-    public void testLoginUser() {
+    void showLogin_LoggedIn_ReturnsRedirect() {
+        // Given
+        when(authUser.isUserLogged()).thenReturn(true);
+
+        // When
+        String view = controller.showLogin(model);
+
+        // Then
+        assertEquals("redirect:/", view);
+        verifyNoInteractions(model);
+    }
+
+    @Test
+    void loginUser_NotLoggedIn_AuthenticatesAndRedirectsToHome() {
+        // Given
         LoginDTO loginDTO = new LoginDTO();
-        Cookie cookie = new Cookie("authCookie", "dummyValue");
-        when(service.authenticateUser(loginDTO)).thenReturn(cookie);
 
-        String redirect = controller.loginUser(loginDTO, response);
+        // When
+        String view = controller.loginUser(loginDTO, response);
 
-        assertEquals("redirect:/", redirect);
-        verify(response).addCookie(cookie);
+        // Then
+        assertEquals("redirect:/", view);
+        verify(service).authenticateUser(loginDTO);
+        verify(response).addCookie(any());
+    }
+
+    @Test
+    void loginUser_LoggedIn_ReturnsRedirect() {
+        // Given
+        when(authUser.isUserLogged()).thenReturn(true);
+
+        // When
+        String view = controller.loginUser(new LoginDTO(), response);
+
+        // Then
+        assertEquals("redirect:/", view);
+        verifyNoInteractions(service);
+        verifyNoInteractions(response);
     }
 }

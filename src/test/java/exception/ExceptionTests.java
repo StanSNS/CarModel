@@ -1,9 +1,9 @@
 package exception;
 
-import com.example.carmodels.constants.ErrorConst;
-import com.example.carmodels.exception.AccessDeniedException;
-import com.example.carmodels.exception.DataValidationException;
-import com.example.carmodels.exception.ResourceNotFoundException;
+import com.example.carmodels.Constants.ErrorConst;
+import com.example.carmodels.Exception.AccessDeniedException;
+import com.example.carmodels.Exception.DataValidationException;
+import com.example.carmodels.Exception.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;

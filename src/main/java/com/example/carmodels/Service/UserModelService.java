@@ -1,17 +1,16 @@
-package com.example.carmodels.service;
+package com.example.carmodels.Service;
 
 import com.example.carmodels.Models.DTO.LoginDTO;
 import com.example.carmodels.Models.DTO.RegisterDTO;
 import com.example.carmodels.Models.Entity.RoleModels;
 import com.example.carmodels.Models.Entity.UserModels;
 import com.example.carmodels.Security.JwtTokenProvider;
-import com.example.carmodels.exception.AccessDeniedException;
-import com.example.carmodels.exception.DataValidationException;
-import com.example.carmodels.exception.ResourceNotFoundException;
-import com.example.carmodels.repository.RoleRepository;
-import com.example.carmodels.repository.UserRepository;
+import com.example.carmodels.Exception.AccessDeniedException;
+import com.example.carmodels.Exception.DataValidationException;
+import com.example.carmodels.Exception.ResourceNotFoundException;
+import com.example.carmodels.Repository.RoleRepository;
+import com.example.carmodels.Repository.UserRepository;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,10 +25,9 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.example.carmodels.constants.JWTConst.JWT_COOKIE_NAME;
-import static com.example.carmodels.constants.JWTConst.TOKEN_TYPE;
-import static com.example.carmodels.constants.RoleConst.BASIC_USER;
-import static com.example.carmodels.constants.SessionConst.JS_SESSION;
+import static com.example.carmodels.Constants.JWTConst.JWT_COOKIE_NAME;
+import static com.example.carmodels.Constants.JWTConst.TOKEN_TYPE;
+import static com.example.carmodels.Constants.RoleConst.BASIC_USER;
 
 @Service
 public class UserModelService {

@@ -1,4 +1,4 @@
-package com.example.carmodels.repository;
+package com.example.carmodels.Repository;
 
 import com.example.carmodels.Models.Entity.RoleModels;
 import org.springframework.data.repository.CrudRepository;
