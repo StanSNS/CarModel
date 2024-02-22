@@ -1,5 +1,6 @@
 package security;
 
+import com.example.carmodels.Exception.ResourceNotFoundException;
 import com.example.carmodels.Models.Entity.RoleModels;
 import com.example.carmodels.Models.Entity.UserModels;
 import com.example.carmodels.Security.CustomUserDetails;
@@ -64,7 +65,7 @@ public class CustomUserDetailsTest {
         when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
 
         // Act and Assert
-        assertThrows(NullPointerException.class, () -> customUserDetails.loadUserByUsername(email));
+        assertThrows(ResourceNotFoundException.class, () -> customUserDetails.loadUserByUsername(email));
     }
 
     @Test
