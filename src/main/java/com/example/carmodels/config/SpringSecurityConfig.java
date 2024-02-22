@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -54,19 +55,18 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
 
         // Define authorization rules for different request matchers
         http.authorizeHttpRequests((authorize) -> {
-            // Define request matchers and permissions
-            authorize.requestMatchers("/auth/**").permitAll();
-            authorize.anyRequest().authenticated();
-        });
-
-        // Configure form-based login. Users are redirected to "/auth/login" to log in.
-        http.formLogin(form -> form.loginPage("/auth/login").permitAll());
-
-        http.logout((logout) ->
-                logout.logoutUrl("/auth/logout")
-                        .deleteCookies(JS_SESSION, JWT_COOKIE_NAME)
-                        .invalidateHttpSession(true)
-                        .clearAuthentication(true));
+                    // Define request matchers and permissions
+                    authorize.requestMatchers("/auth/**").permitAll();
+                    authorize.anyRequest().authenticated();
+                })
+                .logout((logout -> {
+                    logout.logoutUrl("/auth/logout");
+                    logout.deleteCookies(JS_SESSION, JWT_COOKIE_NAME);
+                    logout.invalidateHttpSession(true);
+                    logout.clearAuthentication(true);
+                    logout.logoutSuccessUrl("/auth/login");
+                    logout.logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext()));
+                }));
 
         // Configure OAuth2 login with default settings.
         http.oauth2Login(Customizer.withDefaults());
