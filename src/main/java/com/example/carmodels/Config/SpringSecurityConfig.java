@@ -50,20 +50,23 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
      * @throws Exception If an error occurs while configuring security.
      */
     @Bean
+    // Define a SecurityFilterChain bean for configuring security filters in Spring Security.
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // Disable CSRF protection
         http.csrf(AbstractHttpConfigurer::disable);
 
-        // Define authorization rules for different request matchers
+        // Configure authorization rules
         http.authorizeHttpRequests((authorize) -> {
-                    // Define request matchers and permissions
+                    // Permit access to specified endpoints
                     authorize.requestMatchers(
                             "/auth/**",
                             "/error",
                             "/**"
                     ).permitAll();
+                    // Require authentication for any other requests
                     authorize.anyRequest().authenticated();
                 })
+                // Configure logout behavior
                 .logout((logout -> {
                     logout.logoutUrl("/auth/logout");
                     logout.deleteCookies(JS_SESSION, JWT_COOKIE_NAME);
@@ -72,21 +75,26 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
                     logout.logoutSuccessUrl("/auth/login");
                 }));
 
+        // Configure exception handling
         http.exceptionHandling((ex) -> {
+            // Handle access denied exceptions by setting response status to 404
             ex.accessDeniedHandler((request, response, accessDeniedException) -> response.setStatus(404));
+            // Set authentication entry point for authentication exceptions
             ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.NOT_FOUND));
+            // Redirect to error page for access denied exceptions
             ex.accessDeniedPage("/error");
         });
 
-        // Configure OAuth2 login with default settings.
+        // Configure OAuth2 login with default settings
         http.oauth2Login(Customizer.withDefaults());
 
-        // Enable basic authentication with default settings
+        // Configure HTTP Basic authentication with default settings
         http.httpBasic(Customizer.withDefaults());
 
-        // Add JWT authentication filter before the UsernamePasswordAuthenticationFilter
+        // Add custom JWT authentication filter before the UsernamePasswordAuthenticationFilter
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
+        // Build and return the configured SecurityFilterChain
         return http.build();
     }
 
