@@ -3,6 +3,7 @@ package com.example.carmodels.config;
 import com.example.carmodels.Security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -54,19 +56,27 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
 
         // Define authorization rules for different request matchers
         http.authorizeHttpRequests((authorize) -> {
-            // Define request matchers and permissions
-            authorize.requestMatchers("/auth/**").permitAll();
-            authorize.anyRequest().authenticated();
+                    // Define request matchers and permissions
+                    authorize.requestMatchers(
+                            "/auth/**",
+                            "/error",
+                            "/**"
+                    ).permitAll();
+                    authorize.anyRequest().authenticated();
+                })
+                .logout((logout -> {
+                    logout.logoutUrl("/auth/logout");
+                    logout.deleteCookies(JS_SESSION, JWT_COOKIE_NAME);
+                    logout.invalidateHttpSession(true);
+                    logout.clearAuthentication(true);
+                    logout.logoutSuccessUrl("/auth/login");
+                }));
+
+        http.exceptionHandling((ex) -> {
+            ex.accessDeniedHandler((request, response, accessDeniedException) -> response.setStatus(404));
+            ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.NOT_FOUND));
+            ex.accessDeniedPage("/error");
         });
-
-        // Configure form-based login. Users are redirected to "/auth/login" to log in.
-        http.formLogin(form -> form.loginPage("/auth/login").permitAll());
-
-        http.logout((logout) ->
-                logout.logoutUrl("/auth/logout")
-                        .deleteCookies(JS_SESSION, JWT_COOKIE_NAME)
-                        .invalidateHttpSession(true)
-                        .clearAuthentication(true));
 
         // Configure OAuth2 login with default settings.
         http.oauth2Login(Customizer.withDefaults());
